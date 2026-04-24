@@ -10,24 +10,26 @@
 :root{
   --green:#3a7a4a;--green-light:#e6f0e8;--green-dark:#1e4a2a;
   --terra:#b85c38;--terra-light:#f5ece7;--terra-mid:#d4734a;
-  --rose:#c9a4a4;--rose-light:#f5ecec;--rose-dark:#8c6060;
-  --gray:#8a8a8a;--gray-light:#f4f4f2;--gray-mid:#d8d8d4;
+  --rose:#c9a4a4;--rose-light:#f5ecec;
+  --gray-light:#f4f4f2;--gray-mid:#d8d8d4;
   --white:#fdfcfa;--text:#2c2c2a;--text-muted:#6b6b68;
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Jost',sans-serif;
 }
+*{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--white);color:var(--text);font-size:15px;line-height:1.7}
 
 nav{position:sticky;top:0;z-index:100;background:rgba(253,252,250,0.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px}
 .logo{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--green-dark);text-decoration:none;display:flex;align-items:center;gap:10px;cursor:pointer}
-.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
 .nav-links a{font-size:12px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-muted);text-decoration:none;cursor:pointer;transition:color 0.2s}
 .nav-links a:hover{color:var(--green)}
-.nav-cta{background:var(--green);color:white;border:none;padding:9px 22px;border-radius:30px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.06em;cursor:pointer;transition:background 0.2s}
+.nav-cta{background:var(--green);color:white;border:none;padding:9px 22px;border-radius:30px;font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;transition:background 0.2s}
 .nav-cta:hover{background:var(--green-dark)}
 
 .page{display:none}.page.active{display:block}
 
+/* HERO */
 .hero{min-height:88vh;display:grid;grid-template-columns:1fr 1fr;align-items:center}
 .hero-content{padding:5rem 3rem 5rem 4rem}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-dark);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:1.5rem}
@@ -60,6 +62,7 @@ section{padding:5rem 4rem}
 .section-title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--green-dark);line-height:1.25}
 .section-sub{font-size:14.5px;color:var(--text-muted);max-width:480px;margin:0.8rem auto 0;line-height:1.85}
 
+/* TERAPIAS */
 .terapias-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem}
 .terapia-card{background:white;border:1px solid var(--gray-mid);border-radius:16px;padding:2rem 1.5rem;text-align:center;transition:all 0.3s}
 .terapia-card:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 12px 30px rgba(58,122,74,0.1)}
@@ -68,6 +71,7 @@ section{padding:5rem 4rem}
 .terapia-card p{font-size:13px;color:var(--text-muted);line-height:1.7}
 .terapia-price{margin-top:1rem;font-family:var(--serif);font-size:18px;color:var(--terra);font-weight:600}
 
+/* COMBOS */
 .combos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem}
 .combo-card{border-radius:16px;border:1px solid var(--gray-mid);background:white;padding:1.8rem;display:flex;flex-direction:column;gap:1rem;transition:all 0.3s}
 .combo-card:hover{border-color:var(--terra-mid);transform:translateY(-3px);box-shadow:0 10px 28px rgba(184,92,56,0.1)}
@@ -81,20 +85,26 @@ section{padding:5rem 4rem}
 .combo-price{font-family:var(--serif);font-size:26px;color:var(--terra);font-weight:600}
 .combo-price span{font-size:14px;font-weight:400}
 
-.produtos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem}
-.produto-card{border-radius:16px;overflow:hidden;border:1px solid var(--gray-mid);background:white;transition:all 0.3s}
+/* PRODUTOS */
+.produtos-filtros{display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem}
+.filtro-btn{background:white;border:1px solid var(--gray-mid);color:var(--text-muted);padding:8px 18px;border-radius:20px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s}
+.filtro-btn:hover,.filtro-btn.active{background:var(--green);color:white;border-color:var(--green)}
+.produtos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem}
+.produto-card{border-radius:16px;overflow:hidden;border:1px solid var(--gray-mid);background:white;transition:all 0.3s;display:flex;flex-direction:column}
 .produto-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.08)}
-.produto-img{height:170px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
-.produto-badge{position:absolute;top:12px;left:12px;background:var(--terra);color:white;font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.produto-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+.produto-badge{position:absolute;top:10px;left:10px;color:white;font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.produto-badge.terra{background:var(--terra)}
 .produto-badge.green{background:var(--green)}
-.produto-body{padding:1.2rem 1.4rem 1.4rem}
-.produto-body h3{font-family:var(--serif);font-size:18px;color:var(--text);margin-bottom:0.4rem;font-weight:400}
-.produto-body p{font-size:12.5px;color:var(--text-muted);margin-bottom:1rem;line-height:1.65}
-.produto-footer{display:flex;align-items:center;justify-content:space-between}
-.produto-price{font-family:var(--serif);font-size:21px;color:var(--green-dark);font-weight:600}
-.btn-comprar{background:var(--green);color:white;border:none;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:background 0.2s;font-family:var(--sans)}
+.produto-body{padding:1.1rem 1.3rem 1.3rem;flex:1;display:flex;flex-direction:column}
+.produto-body h3{font-family:var(--serif);font-size:18px;color:var(--text);margin-bottom:0.35rem;font-weight:400}
+.produto-body p{font-size:12.5px;color:var(--text-muted);margin-bottom:1rem;line-height:1.65;flex:1}
+.produto-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+.produto-price{font-family:var(--serif);font-size:20px;color:var(--green-dark);font-weight:600}
+.btn-comprar{background:var(--green);color:white;border:none;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;transition:background 0.2s;font-family:var(--sans);text-decoration:none;display:inline-block}
 .btn-comprar:hover{background:var(--green-dark)}
 
+/* SOBRE */
 .sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .sobre-visual{text-align:center;position:relative}
 .sobre-circle{width:300px;height:300px;border-radius:50%;background:linear-gradient(135deg,var(--green-light),var(--terra-light));display:inline-flex;align-items:center;justify-content:center;font-size:5rem}
@@ -107,6 +117,7 @@ section{padding:5rem 4rem}
 .cert-list li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--text);padding:7px 0;border-bottom:1px solid var(--gray-light)}
 .cert-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
 
+/* DEPOIMENTOS */
 .depo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem}
 .depo-card{background:var(--green-light);border-radius:16px;padding:1.8rem}
 .depo-quote{font-family:var(--serif);font-size:44px;color:var(--green);line-height:1;margin-bottom:0.4rem;opacity:0.4}
@@ -116,9 +127,10 @@ section{padding:5rem 4rem}
 .depo-name{font-size:13.5px;font-weight:500;color:var(--green-dark)}
 .depo-stars{font-size:11px;color:var(--terra);letter-spacing:2px}
 
+/* CONTATO */
 .contato-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start}
 .contato-info h2{font-family:var(--serif);font-size:2.3rem;font-weight:300;color:var(--green-dark);margin-bottom:1rem;line-height:1.2}
-.contato-info > p{color:var(--text-muted);line-height:1.85;margin-bottom:2rem;font-size:14.5px}
+.contato-info>p{color:var(--text-muted);line-height:1.85;margin-bottom:2rem;font-size:14.5px}
 .contato-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.2rem}
 .contato-icon{width:40px;height:40px;border-radius:10px;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .contato-item h4{font-size:12px;color:var(--text-muted);margin-bottom:2px;font-weight:400;letter-spacing:0.04em;text-transform:uppercase}
@@ -151,18 +163,12 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.12);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:12px}
 
 .bg-rose{background:var(--rose-light)}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp 0.55s ease forwards}
+.bg-gray{background:var(--gray-light)}
 
 @media(max-width:768px){
-  nav{padding:0 1rem}
-  .nav-links{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero-visual{display:none}
-  .hero-content{padding:3rem 1.5rem}
-  section{padding:3rem 1.5rem}
-  .strip{padding:1rem 1.5rem;gap:1rem}
+  nav{padding:0 1rem}.nav-links{display:none}
+  .hero{grid-template-columns:1fr}.hero-visual{display:none}.hero-content{padding:3rem 1.5rem}
+  section{padding:3rem 1.5rem}.strip{padding:1rem 1.5rem;gap:1rem}
   .sobre-grid,.contato-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .cta-dark{padding:3rem 1.5rem}
@@ -174,9 +180,7 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
 <body>
 
 <nav>
-  <div class="logo" onclick="showPage('home')">
-    ✦ SL Saúde & Bem-Estar
-  </div>
+  <div class="logo" onclick="showPage('home')">✦ SL Saúde & Bem-Estar</div>
   <ul class="nav-links">
     <li><a onclick="showPage('home')">Início</a></li>
     <li><a onclick="showPage('terapias')">Terapias</a></li>
@@ -191,7 +195,7 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-content fade-up">
+    <div class="hero-content">
       <span class="hero-badge">✦ Naturopatia & Terapias Alternativas</span>
       <h1>Equilíbrio para o seu<br><em>corpo e mente</em><br>através da natureza</h1>
       <p class="hero-sub">Descubra o poder das terapias naturais com Shirlley Lima — ventosas, aromaterapia, auriculoterapia e blends exclusivos de óleos essenciais desenvolvidos especialmente para você.</p>
@@ -221,8 +225,8 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
     <div class="strip-pill"><span class="strip-dot"></span>Ventosaterapia</div>
     <div class="strip-pill"><span class="strip-dot"></span>Aromaterapia</div>
     <div class="strip-pill"><span class="strip-dot"></span>Auriculoterapia</div>
-    <div class="strip-pill"><span class="strip-dot"></span>Mix de Óleos Essenciais</div>
-    <div class="strip-pill"><span class="strip-dot"></span>Xarope Natural</div>
+    <div class="strip-pill"><span class="strip-dot"></span>Óleos Essenciais</div>
+    <div class="strip-pill"><span class="strip-dot"></span>Chás Naturais</div>
     <div class="strip-pill"><span class="strip-dot"></span>Consultas Online</div>
   </div>
 
@@ -352,7 +356,7 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
     <div class="section-header">
       <div class="section-tag">Promoções</div>
       <h2 class="section-title">Combos Especiais</h2>
-      <p class="section-sub">Combine terapias e economize! Nossos combos foram pensados para oferecer uma experiência completa de bem-estar.</p>
+      <p class="section-sub">Combine terapias e economize! Nossos combos foram pensados para uma experiência completa de bem-estar.</p>
     </div>
     <div class="combos-grid">
       <div class="combo-card">
@@ -405,7 +409,7 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
       </div>
     </div>
     <div style="background:var(--green-light);border-radius:16px;padding:2rem;margin-top:2rem;text-align:center">
-      <p style="font-family:var(--serif);font-size:20px;color:var(--green-dark);margin-bottom:0.5rem">Tem dúvidas sobre qual combo escolher?</p>
+      <p style="font-family:var(--serif);font-size:20px;color:var(--green-dark);margin-bottom:0.5rem">Dúvidas sobre qual combo escolher?</p>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:1.2rem">Fale comigo no WhatsApp e te ajudo a encontrar o melhor para você!</p>
       <a href="https://wa.me/5591982079121?text=Olá%20Shirlley!%20Preciso%20de%20ajuda%20para%20escolher%20um%20combo." class="wa-btn" style="display:inline-flex">
         <span style="font-size:18px">💬</span> Falar com Shirlley
@@ -420,57 +424,141 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
     <div class="section-header">
       <div class="section-tag">Loja Natural</div>
       <h2 class="section-title">Produtos para Levar para Casa</h2>
-      <p class="section-sub">Produtos naturais artesanais para você continuar cuidando de si todos os dias.</p>
+      <p class="section-sub">Óleos essenciais, chás e produtos naturais artesanais. Clique em "Comprar" para finalizar sua compra com segurança.</p>
     </div>
-    <div class="produtos-grid">
-      <div class="produto-card">
+
+    <div class="produtos-filtros">
+      <button class="filtro-btn active" onclick="filtrar('todos', this)">Todos</button>
+      <button class="filtro-btn" onclick="filtrar('oleo', this)">Óleos Essenciais</button>
+      <button class="filtro-btn" onclick="filtrar('cha', this)">Chás</button>
+      <button class="filtro-btn" onclick="filtrar('outros', this)">Outros</button>
+    </div>
+
+    <div class="produtos-grid" id="produtos-grid">
+
+      <!-- ÓLEOS ESSENCIAIS -->
+      <div class="produto-card" data-cat="oleo">
         <div class="produto-img" style="background:var(--green-light)">
-          💧<span class="produto-badge">Mais vendido</span>
+          💧<span class="produto-badge green">Foco & Clareza</span>
         </div>
         <div class="produto-body">
-          <h3>Mix Relaxante — Ansiedade & Estresse</h3>
-          <p>Blend com lavanda, bergamota e camomila. Alivia tensão e acalma a mente para o dia a dia.</p>
+          <h3>Mente Aberta 5ml</h3>
+          <p>Sua melhor opção para os momentos que exigem mais concentração — no trabalho e nos estudos.</p>
           <div class="produto-footer">
-            <span class="produto-price">A partir de R$ 65</span>
-            <a href="https://wa.me/5591982079121?text=Olá!%20Quero%20um%20Mix%20Relaxante." class="btn-comprar">Pedir</a>
+            <span class="produto-price">R$ 65,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/mente-aberta-5ml/" target="_blank" class="btn-comprar">Comprar</a>
           </div>
         </div>
       </div>
-      <div class="produto-card">
-        <div class="produto-img" style="background:var(--rose-light)">💤</div>
+
+      <div class="produto-card" data-cat="oleo">
+        <div class="produto-img" style="background:var(--rose-light)">
+          💧<span class="produto-badge terra">Feminino</span>
+        </div>
         <div class="produto-body">
-          <h3>Mix Sono Profundo</h3>
-          <p>Combinação especial para melhorar a qualidade do sono e acordar renovado.</p>
+          <h3>Acalma Menina 5ml</h3>
+          <p>Blend especial para equilíbrio emocional feminino. Alivia tensões e traz leveza ao dia a dia.</p>
           <div class="produto-footer">
-            <span class="produto-price">A partir de R$ 65</span>
-            <a href="https://wa.me/5591982079121?text=Olá!%20Quero%20um%20Mix%20para%20Sono." class="btn-comprar">Pedir</a>
+            <span class="produto-price">R$ 75,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/acalma-menina-5ml/" target="_blank" class="btn-comprar">Comprar</a>
           </div>
         </div>
       </div>
-      <div class="produto-card">
+
+      <div class="produto-card" data-cat="oleo">
+        <div class="produto-img" style="background:#eef3f8">
+          💧<span class="produto-badge green">Sono</span>
+        </div>
+        <div class="produto-body">
+          <h3>Sossego Noturno 5ml</h3>
+          <p>Combinação especial para melhorar a qualidade do sono e acordar renovado e descansado.</p>
+          <div class="produto-footer">
+            <span class="produto-price">R$ 70,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/sossego-noturno-5ml/" target="_blank" class="btn-comprar">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="produto-card" data-cat="oleo">
+        <div class="produto-img" style="background:#f0f5ee">
+          💧<span class="produto-badge green">Digestão</span>
+        </div>
+        <div class="produto-body">
+          <h3>Calma Digestiva 5ml</h3>
+          <p>Auxilia no conforto digestivo, aliviando desconfortos como inchaço, gases e má digestão.</p>
+          <div class="produto-footer">
+            <span class="produto-price">R$ 65,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/calma-digestiva-5ml/" target="_blank" class="btn-comprar">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="produto-card" data-cat="oleo">
+        <div class="produto-img" style="background:var(--terra-light)">
+          💧<span class="produto-badge terra">Dores</span>
+        </div>
+        <div class="produto-body">
+          <h3>Adeus Tensão 5ml</h3>
+          <p>Blend para alívio de tensões musculares, dores de cabeça e estresse acumulado no corpo.</p>
+          <div class="produto-footer">
+            <span class="produto-price">R$ 70,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/adeus-tensao-5ml/" target="_blank" class="btn-comprar">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="produto-card" data-cat="oleo">
+        <div class="produto-img" style="background:#edf5f5">
+          💧<span class="produto-badge green">Respiração</span>
+        </div>
+        <div class="produto-body">
+          <h3>Gotas de Ar 5ml</h3>
+          <p>Auxilia nas vias respiratórias, trazendo leveza e clareza para respirar melhor no dia a dia.</p>
+          <div class="produto-footer">
+            <span class="produto-price">R$ 70,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/gotas-de-ar-5ml/" target="_blank" class="btn-comprar">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHÁ -->
+      <div class="produto-card" data-cat="cha">
+        <div class="produto-img" style="background:var(--green-light)">
+          🍵<span class="produto-badge green">Relaxante</span>
+        </div>
+        <div class="produto-body">
+          <h3>Chá Relaxante</h3>
+          <p>Uma xícara quentinha para acalmar a mente, aliviar o estresse e desacelerar com leveza.</p>
+          <div class="produto-footer">
+            <span class="produto-price">R$ 70,00</span>
+            <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/cha-relaxante/" target="_blank" class="btn-comprar">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- XAROPE -->
+      <div class="produto-card" data-cat="outros">
         <div class="produto-img" style="background:#edf5f0">
-          🍃<span class="produto-badge green">Natural</span>
+          🍃<span class="produto-badge green">Imunidade</span>
         </div>
         <div class="produto-body">
           <h3>Xarope Natural 180ml</h3>
-          <p>Combate gripes e aumenta a imunidade. Para crianças e adultos. 100% natural e artesanal.</p>
+          <p>Combate gripes e aumenta a imunidade naturalmente. Indicado para crianças e adultos.</p>
           <div class="produto-footer">
             <span class="produto-price">R$ 40,00</span>
-            <a href="https://wa.me/5591982079121?text=Olá!%20Quero%20o%20Xarope%20Natural." class="btn-comprar">Pedir</a>
+            <a href="https://wa.me/5591982079121?text=Olá!%20Quero%20o%20Xarope%20Natural." target="_blank" class="btn-comprar">Pedir</a>
           </div>
         </div>
       </div>
-      <div class="produto-card">
-        <div class="produto-img" style="background:var(--terra-light)">✨</div>
-        <div class="produto-body">
-          <h3>Mix Personalizado</h3>
-          <p>Criado sob medida para você após consulta. Diga o que precisa e fazemos o blend ideal.</p>
-          <div class="produto-footer">
-            <span class="produto-price">A partir de R$ 65</span>
-            <a href="https://wa.me/5591982079121?text=Olá!%20Quero%20um%20Mix%20Personalizado." class="btn-comprar">Pedir</a>
-          </div>
-        </div>
-      </div>
+
+    </div>
+
+    <div style="background:var(--green-light);border-radius:16px;padding:2rem;margin-top:2.5rem;text-align:center">
+      <p style="font-family:var(--serif);font-size:19px;color:var(--green-dark);margin-bottom:0.4rem">Quer ver todos os produtos da loja?</p>
+      <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:1.2rem">Acesse a loja completa com todas as categorias disponíveis.</p>
+      <a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/" target="_blank" class="btn-primary" style="display:inline-block">
+        Ver Loja Completa →
+      </a>
     </div>
   </section>
 </div>
@@ -546,11 +634,17 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
             <option>Ventosaterapia — R$ 50,00</option>
             <option>Auriculoterapia — R$ 50,00</option>
             <option>Consulta Online — R$ 80,00</option>
-            <option>Mix de Óleos — a partir de R$ 65,00</option>
-            <option>Xarope Natural — R$ 40,00</option>
             <option>Combo Essencial — R$ 80,00</option>
             <option>Combo Completo — R$ 100,00</option>
             <option>Combo Premium — R$ 160,00</option>
+            <option>Mente Aberta 5ml — R$ 65,00</option>
+            <option>Acalma Menina 5ml — R$ 75,00</option>
+            <option>Sossego Noturno 5ml — R$ 70,00</option>
+            <option>Calma Digestiva 5ml — R$ 65,00</option>
+            <option>Adeus Tensão 5ml — R$ 70,00</option>
+            <option>Gotas de Ar 5ml — R$ 70,00</option>
+            <option>Chá Relaxante — R$ 70,00</option>
+            <option>Xarope Natural — R$ 40,00</option>
           </select>
         </div>
         <div class="form-group"><label>Mensagem</label><textarea id="f-msg" placeholder="Conte o que você está buscando..."></textarea></div>
@@ -584,12 +678,13 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
       <ul>
         <li><a>(91) 98207-9121</a></li>
         <li><a>@sl.saudebemestar</a></li>
+        <li><a href="https://slsaudebemestar.lojavirtualnuvem.com.br/produtos/" target="_blank">Loja Nuvemshop</a></li>
         <li><a onclick="showPage('contato')">Agendar sessão</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 SL Saúde & Bem-Estar · Shirlley Lima</span>
+    <span>© 2026 SL Saúde & Bem-Estar · Shirlley Lima</span>
     <span>Feito com 🌿 amor em Mãe do Rio, PA</span>
   </div>
 </footer>
@@ -599,6 +694,17 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.getElementById('page-'+id).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function filtrar(cat, btn){
+  document.querySelectorAll('.filtro-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.produto-card').forEach(function(card){
+    if(cat==='todos' || card.dataset.cat===cat){
+      card.style.display='flex';
+    } else {
+      card.style.display='none';
+    }
+  });
 }
 function sendWhatsApp(){
   var nome=document.getElementById('f-nome').value||'';
