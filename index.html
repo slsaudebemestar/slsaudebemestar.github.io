@@ -166,7 +166,10 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
 .bg-gray{background:var(--gray-light)}
 
 @media(max-width:768px){
-  nav{padding:0 1rem}.nav-links{display:none}
+  nav{padding:0 1rem}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
   .hero{grid-template-columns:1fr}.hero-visual{display:none}.hero-content{padding:3rem 1.5rem}
   section{padding:3rem 1.5rem}.strip{padding:1rem 1.5rem;gap:1rem}
   .sobre-grid,.contato-grid{grid-template-columns:1fr}
@@ -174,12 +177,72 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
   .cta-dark{padding:3rem 1.5rem}
   footer{padding:2rem 1.5rem}
   .form-row{grid-template-columns:1fr}
+  .terapias-grid,.combos-grid,.produtos-grid,.depo-grid{grid-template-columns:1fr}
+  .stats-row{gap:1.2rem}
+  .btn-group{flex-direction:column}
+  .btn-primary,.btn-outline{text-align:center}
+  .hero h1{font-size:2.2rem}
+  .section-title{font-size:1.9rem}
+  .produtos-filtros{gap:0.5rem}
+  .filtro-btn{font-size:11px;padding:7px 14px}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+  .form-row{grid-template-columns:1fr}
 }
 
 
 /* Product image backgrounds adapt to dark mode */
 body.dark .produto-img{filter:brightness(0.92)}
 body.dark .produto-img img{filter:brightness(1.08)}
+
+
+/* HAMBURGER MENU */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent;z-index:200}
+.hamburger span{display:block;width:24px;height:2px;background:var(--green-dark);border-radius:2px;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* MOBILE DRAWER */
+.mobile-nav{
+  display:none;
+  position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:rgba(253,252,250,0.98);
+  backdrop-filter:blur(12px);
+  z-index:150;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  overflow-y:auto;
+}
+.mobile-nav.open{display:flex}
+body.dark .mobile-nav{background:rgba(18,18,18,0.98)}
+
+.mobile-nav a{
+  font-family:var(--serif);
+  font-size:28px;
+  font-weight:300;
+  color:var(--green-dark);
+  text-decoration:none;
+  cursor:pointer;
+  padding:1rem 2rem;
+  width:100%;
+  text-align:center;
+  border-bottom:1px solid var(--gray-mid);
+  transition:background 0.2s;
+}
+body.dark .mobile-nav a{color:#7ec491;border-bottom-color:#333}
+.mobile-nav a:hover{background:var(--green-light)}
+body.dark .mobile-nav a:hover{background:#1a2e20}
+.mobile-nav a.destaque{color:var(--terra);font-style:italic}
+.mobile-nav .mobile-cta{
+  margin-top:1.5rem;
+  background:var(--green);color:white;
+  padding:14px 40px;border-radius:30px;border:none;
+  font-family:var(--sans);font-size:16px;font-weight:500;
+  cursor:pointer;width:auto;border-bottom:none;
+}
+.mobile-nav .mobile-cta:hover{background:var(--green-dark)}
 
 /* DARK MODE TOGGLE */
 .dm-btn{position:fixed;bottom:24px;right:24px;z-index:999;width:48px;height:48px;border-radius:50%;border:none;
@@ -315,7 +378,22 @@ function toggleDark(){
     <li><a onclick="showPage('parcerias')" style="color:var(--terra)">Parcerias</a></li>
   </ul>
   <button class="nav-cta" onclick="showPage('contato')">Agendar Sessão</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-nav" id="mobile-nav">
+  <a onclick="navTo('home')">Início</a>
+  <a onclick="navTo('terapias')">Terapias</a>
+  <a onclick="navTo('combos')">Combos</a>
+  <a onclick="navTo('produtos')">Produtos</a>
+  <a onclick="navTo('sobre')">Sobre</a>
+  <a onclick="navTo('contato')">Contato</a>
+  <a onclick="navTo('parcerias')" class="destaque">Parcerias</a>
+  <button class="mobile-cta" onclick="navTo('contato')">Agendar Sessão</button>
+</div>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
@@ -974,6 +1052,23 @@ function toggleDark(){
 </footer>
 
 <script>
+
+function toggleMenu(){
+  var nav = document.getElementById('mobile-nav');
+  var btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+}
+function navTo(id){
+  showPage(id);
+  var nav = document.getElementById('mobile-nav');
+  var btn = document.getElementById('hamburger');
+  nav.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.getElementById('page-'+id).classList.add('active');
