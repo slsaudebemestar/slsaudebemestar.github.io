@@ -174,15 +174,8 @@ body.dark .hamburger span{background:#7ec491}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 
-/* ── HAMBURGER ── */
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent;z-index:300;flex-shrink:0}
-.hamburger span{display:block;width:22px;height:2px;background:var(--green-dark);border-radius:2px;transition:all 0.3s}
-body.dark .hamburger span{background:#7ec491}
-.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-
 /* ── MOBILE DRAWER ── */
+.mobile-nav{display:none!important}
 .mobile-drawer{
   position:fixed;top:64px;left:0;right:0;bottom:0;
   background:rgba(253,252,250,0.98);
@@ -194,7 +187,9 @@ body.dark .hamburger span{background:#7ec491}
   padding-bottom:2rem;
 }
 .mobile-drawer.open{display:flex}
-body.dark .mobile-drawer{background:rgba(18,18,18,0.98)}
+.mobile-drawer a{color:var(--green-dark) !important}
+.mobile-drawer a.destaque{color:var(--terra) !important}
+body.dark .mobile-nav{display:none!important}
 
 .mobile-drawer a{
   font-family:var(--serif);
@@ -250,8 +245,40 @@ body.dark .mobile-drawer a{color:#7ec491;border-bottom-color:#333}
   .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
   .sobre-float{right:0;bottom:-10px}
   .dm-btn{bottom:16px;right:16px;width:42px;height:42px;font-size:18px}
-  .mobile-drawer{top:60px}
+  .mobile-nav{display:none!important}
+.mobile-drawer{top:60px}
 }
+
+/* ── DARK MODE ── */
+.dm-btn{position:fixed;bottom:24px;right:24px;z-index:999;width:48px;height:48px;border-radius:50%;border:none;
+  background:var(--green-dark);color:white;font-size:20px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+.dm-btn:hover{transform:scale(1.1)}
+
+body.dark{
+  --white:#121212;--text:#e8e6e0;--text-muted:#a0a09a;
+  --gray-light:#1e1e1e;--gray-mid:#333330;
+  --green-light:#1a2e20;--green-dark:#7ec491;
+  --terra-light:#2a1a12;--rose-light:#2a1a1a;
+}
+body.dark nav{background:rgba(18,18,18,0.97);border-bottom-color:#333}
+body.dark .logo img{filter:none !important}
+body.dark .terapia-card,body.dark .combo-card,body.dark .produto-card,body.dark .form-card{background:#1e1e1e;border-color:#333}
+body.dark .depo-card{background:#1a2e20}
+body.dark .form-group input,body.dark .form-group textarea,body.dark .form-group select{background:#1e1e1e;border-color:#444;color:#e8e6e0}
+body.dark .sobre-float{background:#1e1e1e;border-color:#333}
+body.dark .dm-btn{background:#7ec491;color:#121212}
+body.dark footer{background:#0a0a0a}
+body.dark .mobile-nav{display:none!important}
+body.dark .mobile-drawer{background:rgba(18,18,18,0.98)}
+body.dark .mobile-drawer a{color:#7ec491 !important;border-bottom-color:#333}
+body.dark .filtro-btn{background:#1e1e1e;border-color:#444;color:#a0a09a}
+body.dark .filtro-btn.active{background:var(--green);color:white;border-color:var(--green)}
+
+/* product img dark mode */
+body.dark .produto-img{filter:brightness(0.88)}
+body.dark .produto-img img{filter:brightness(1.1)}
+
 </style>
 
   <!-- Google Analytics -->
@@ -380,16 +407,7 @@ function toggleDark(){
 </div>
 
 <!-- MOBILE DRAWER -->
-<div class="mobile-nav" id="mobile-nav">
-  <a onclick="navTo('home')">Início</a>
-  <a onclick="navTo('terapias')">Terapias</a>
-  <a onclick="navTo('combos')">Combos</a>
-  <a onclick="navTo('produtos')">Produtos</a>
-  <a onclick="navTo('sobre')">Sobre</a>
-  <a onclick="navTo('contato')">Contato</a>
-  <a onclick="navTo('parcerias')" class="destaque">Parcerias</a>
-  <button class="mobile-cta" onclick="navTo('contato')">Agendar Sessão</button>
-</div>
+
 
 <!-- HOME -->
 <div id="page-home" class="page active">
@@ -1056,6 +1074,14 @@ function toggleDrawer(){
   d.classList.toggle('open');
   b.classList.toggle('open');
   document.body.style.overflow=isOpen?'':'hidden';
+}
+function navTo(id){
+  showPage(id);
+  var d=document.getElementById('mobile-drawer');
+  var b=document.getElementById('hamburger');
+  if(d){d.classList.remove('open');}
+  if(b){b.classList.remove('open');}
+  document.body.style.overflow='';
 }
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
