@@ -165,108 +165,93 @@ footer{background:var(--green-dark);padding:3rem 4rem 2rem;color:rgba(255,255,25
 .bg-rose{background:var(--rose-light)}
 .bg-gray{background:var(--gray-light)}
 
+/* HAMBURGER MENU */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent;z-index:200}
+.hamburger span{display:block;width:24px;height:2px;background:var(--green-dark);border-radius:2px;transition:all 0.3s}
+body.dark .hamburger span{background:#7ec491}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+
+/* ── HAMBURGER ── */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent;z-index:300;flex-shrink:0}
+.hamburger span{display:block;width:22px;height:2px;background:var(--green-dark);border-radius:2px;transition:all 0.3s}
+body.dark .hamburger span{background:#7ec491}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-drawer{
+  position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:rgba(253,252,250,0.98);
+  backdrop-filter:blur(16px);
+  z-index:200;
+  flex-direction:column;
+  display:none;
+  overflow-y:auto;
+  padding-bottom:2rem;
+}
+.mobile-drawer.open{display:flex}
+body.dark .mobile-drawer{background:rgba(18,18,18,0.98)}
+
+.mobile-drawer a{
+  font-family:var(--serif);
+  font-size:26px;
+  font-weight:300;
+  color:var(--green-dark);
+  text-decoration:none;
+  cursor:pointer;
+  padding:16px 28px;
+  border-bottom:1px solid var(--gray-mid);
+  transition:background 0.15s;
+  display:block;
+}
+body.dark .mobile-drawer a{color:#7ec491;border-bottom-color:#333}
+.mobile-drawer a:active{background:var(--green-light)}
+.mobile-drawer a.destaque{color:var(--terra);font-style:italic}
+.mobile-drawer .mob-cta{
+  margin:24px 28px 0;
+  background:var(--green);color:white;
+  padding:15px;border-radius:30px;border:none;
+  font-family:var(--sans);font-size:16px;font-weight:500;
+  cursor:pointer;width:calc(100% - 56px);text-align:center;
+  display:block;
+}
+.mobile-drawer .mob-cta:hover{background:var(--green-dark)}
+
 @media(max-width:768px){
-  nav{padding:0 1rem}
-  .nav-links{display:none}
-  .nav-cta{display:none}
-  .hamburger{display:flex}
-  .hero{grid-template-columns:1fr}.hero-visual{display:none}.hero-content{padding:3rem 1.5rem}
-  section{padding:3rem 1.5rem}.strip{padding:1rem 1.5rem;gap:1rem}
+  nav{padding:0 1rem;height:60px}
+  .nav-links{display:none !important}
+  .nav-cta{display:none !important}
+  .hamburger{display:flex !important}
+  .hero{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-content{padding:3rem 1.5rem}
+  section{padding:3rem 1.5rem}
+  .strip{padding:1rem 1.5rem;gap:1rem}
   .sobre-grid,.contato-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .cta-dark{padding:3rem 1.5rem}
   footer{padding:2rem 1.5rem}
   .form-row{grid-template-columns:1fr}
-  .terapias-grid,.combos-grid,.produtos-grid,.depo-grid{grid-template-columns:1fr}
+  .terapias-grid{grid-template-columns:1fr}
+  .combos-grid{grid-template-columns:1fr}
+  .produtos-grid{grid-template-columns:1fr}
+  .depo-grid{grid-template-columns:1fr}
   .stats-row{gap:1.2rem}
   .btn-group{flex-direction:column}
-  .btn-primary,.btn-outline{text-align:center}
+  .btn-primary,.btn-outline{text-align:center;width:100%}
   .hero h1{font-size:2.2rem}
   .section-title{font-size:1.9rem}
   .produtos-filtros{gap:0.5rem}
   .filtro-btn{font-size:11px;padding:7px 14px}
   .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
-  .form-row{grid-template-columns:1fr}
+  .sobre-float{right:0;bottom:-10px}
+  .dm-btn{bottom:16px;right:16px;width:42px;height:42px;font-size:18px}
+  .mobile-drawer{top:60px}
 }
-
-
-/* Product image backgrounds adapt to dark mode */
-body.dark .produto-img{filter:brightness(0.92)}
-body.dark .produto-img img{filter:brightness(1.08)}
-
-
-/* HAMBURGER MENU */
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent;z-index:200}
-.hamburger span{display:block;width:24px;height:2px;background:var(--green-dark);border-radius:2px;transition:all 0.3s}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-/* MOBILE DRAWER */
-.mobile-nav{
-  display:none;
-  position:fixed;top:64px;left:0;right:0;bottom:0;
-  background:rgba(253,252,250,0.98);
-  backdrop-filter:blur(12px);
-  z-index:150;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:0;
-  overflow-y:auto;
-}
-.mobile-nav.open{display:flex}
-body.dark .mobile-nav{background:rgba(18,18,18,0.98)}
-
-.mobile-nav a{
-  font-family:var(--serif);
-  font-size:28px;
-  font-weight:300;
-  color:var(--green-dark);
-  text-decoration:none;
-  cursor:pointer;
-  padding:1rem 2rem;
-  width:100%;
-  text-align:center;
-  border-bottom:1px solid var(--gray-mid);
-  transition:background 0.2s;
-}
-body.dark .mobile-nav a{color:#7ec491;border-bottom-color:#333}
-.mobile-nav a:hover{background:var(--green-light)}
-body.dark .mobile-nav a:hover{background:#1a2e20}
-.mobile-nav a.destaque{color:var(--terra);font-style:italic}
-.mobile-nav .mobile-cta{
-  margin-top:1.5rem;
-  background:var(--green);color:white;
-  padding:14px 40px;border-radius:30px;border:none;
-  font-family:var(--sans);font-size:16px;font-weight:500;
-  cursor:pointer;width:auto;border-bottom:none;
-}
-.mobile-nav .mobile-cta:hover{background:var(--green-dark)}
-
-/* DARK MODE TOGGLE */
-.dm-btn{position:fixed;bottom:24px;right:24px;z-index:999;width:48px;height:48px;border-radius:50%;border:none;
-  background:var(--green-dark);color:white;font-size:20px;cursor:pointer;
-  box-shadow:0 4px 16px rgba(0,0,0,0.25);transition:all 0.3s;display:flex;align-items:center;justify-content:center}
-.dm-btn:hover{transform:scale(1.1)}
-
-body.dark{
-  --white:#121212;--text:#e8e6e0;--text-muted:#a0a09a;
-  --gray-light:#1e1e1e;--gray-mid:#333330;
-  --green-light:#1a2e20;--green-dark:#7ec491;
-  --terra-light:#2a1a12;--rose-light:#2a1a1a;
-}
-body.dark nav{background:rgba(18,18,18,0.97);border-bottom-color:#333}
-body.dark .logo img{filter:none !important}
-body:not(.dark) .logo img{filter:none}
-body.dark .logo img{filter:none !important}
-body.dark .terapia-card,body.dark .combo-card,body.dark .produto-card,body.dark .form-card{background:#1e1e1e;border-color:#333}
-body.dark .depo-card{background:#1a2e20}
-body.dark .form-group input,body.dark .form-group textarea,body.dark .form-group select{background:#1e1e1e;border-color:#444;color:#e8e6e0}
-body.dark .sobre-float{background:#1e1e1e;border-color:#333}
-body.dark .dm-btn{background:#7ec491;color:#121212}
-body.dark footer{background:#0a0a0a}
-
 </style>
 
   <!-- Google Analytics -->
@@ -378,10 +363,21 @@ function toggleDark(){
     <li><a onclick="showPage('parcerias')" style="color:var(--terra)">Parcerias</a></li>
   </ul>
   <button class="nav-cta" onclick="showPage('contato')">Agendar Sessão</button>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Abrir menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <a onclick="navTo('home')">Início</a>
+  <a onclick="navTo('terapias')">Terapias</a>
+  <a onclick="navTo('combos')">Combos</a>
+  <a onclick="navTo('produtos')">Produtos</a>
+  <a onclick="navTo('sobre')">Sobre</a>
+  <a onclick="navTo('contato')">Contato</a>
+  <a onclick="navTo('parcerias')" class="destaque">Parcerias</a>
+  <button class="mob-cta" onclick="navTo('contato')">📅 Agendar Sessão</button>
+</div>
 
 <!-- MOBILE DRAWER -->
 <div class="mobile-nav" id="mobile-nav">
@@ -1053,22 +1049,14 @@ function toggleDark(){
 
 <script>
 
-function toggleMenu(){
-  var nav = document.getElementById('mobile-nav');
-  var btn = document.getElementById('hamburger');
-  nav.classList.toggle('open');
-  btn.classList.toggle('open');
-  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+function toggleDrawer(){
+  var d=document.getElementById('mobile-drawer');
+  var b=document.getElementById('hamburger');
+  var isOpen=d.classList.contains('open');
+  d.classList.toggle('open');
+  b.classList.toggle('open');
+  document.body.style.overflow=isOpen?'':'hidden';
 }
-function navTo(id){
-  showPage(id);
-  var nav = document.getElementById('mobile-nav');
-  var btn = document.getElementById('hamburger');
-  nav.classList.remove('open');
-  btn.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.getElementById('page-'+id).classList.add('active');
