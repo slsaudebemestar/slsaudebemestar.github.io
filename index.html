@@ -389,7 +389,7 @@ function toggleDark(){
     <li><a onclick="showPage('contato')">Contato</a></li>
     <li><a onclick="showPage('parcerias')" style="color:var(--terra)">Parcerias</a></li>
   </ul>
-  <a href="https://crmsl.lovable.app/agenda" target="_blank" class="nav-cta" style="text-decoration:none">Agendar Sessão</a>
+  <button class="nav-cta" onclick="showPage('contato')">Agendar Sessão</button>
   <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Abrir menu">
     <span></span><span></span><span></span>
   </button>
@@ -403,7 +403,7 @@ function toggleDark(){
   <a onclick="navTo('sobre')">Sobre</a>
   <a onclick="navTo('contato')">Contato</a>
   <a onclick="navTo('parcerias')" class="destaque">Parcerias</a>
-  <a href="https://crmsl.lovable.app/agenda" target="_blank" class="mob-cta" style="text-decoration:none;display:block;text-align:center">📅 Agendar Sessão</a>
+  <button class="mob-cta" onclick="navTo('contato')">📅 Agendar Sessão</button>
 </div>
 
 <!-- MOBILE DRAWER -->
@@ -418,7 +418,7 @@ function toggleDark(){
       <p class="hero-sub">Descubra o poder das terapias naturais com Shirlley Lima — ventosas, aromaterapia, auriculoterapia e blends exclusivos de óleos essenciais desenvolvidos especialmente para você.</p>
       <div class="btn-group">
         <button class="btn-primary" onclick="showPage('terapias')">Ver Terapias & Combos</button>
-        <a href="https://crmsl.lovable.app/agenda" target="_blank" class="btn-outline">Agendar Consulta</a>
+        <button class="btn-outline" onclick="showPage('contato')">Agendar Consulta</button>
       </div>
       <div class="stats-row">
         <div><div class="stat-num">5+</div><div class="stat-label">Anos de experiência</div></div>
@@ -557,7 +557,7 @@ function toggleDark(){
       </div>
     </div>
     <div style="text-align:center;margin-top:3rem">
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:3rem"><a href="https://crmsl.lovable.app/agenda" target="_blank" class="btn-primary">Agendar Sessão →</a><button class="btn-outline" onclick="showPage('combos')">Ver Combos com Desconto</button></div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:3rem"><button class="btn-primary" onclick="showPage('contato')">Agendar Sessão →</button><button class="btn-outline" onclick="showPage('combos')">Ver Combos com Desconto</button></div>
     </div>
   </section>
 </div>
@@ -1133,7 +1133,6 @@ async function enviarAgendamento(){
   var dataFmt = new Date(data + 'T00:00:00').toLocaleDateString('pt-BR');
   var horarioFim = calcFimHorario(horario);
 
-  // ── Payload para o webhook do Lovable ──────────────────────────────
   var payload = {
     nome: nome,
     email: email || '',
@@ -1146,7 +1145,12 @@ async function enviarAgendamento(){
     status: 'Agendado'
   };
 
+  console.log('Enviando para:', 'https://gcurojrfdqbktokyfgfl.supabase.co/functions/v1/public-booking');
+  console.log('Payload:', JSON.stringify(payload));
+
   var bookingOk = false;
+  var errorMsg = '';
+
   try {
     var resp = await fetch('https://gcurojrfdqbktokyfgfl.supabase.co/functions/v1/public-booking', {
       method: 'POST',
@@ -1157,16 +1161,20 @@ async function enviarAgendamento(){
       body: JSON.stringify(payload)
     });
 
-    bookingOk = resp.ok;
-    if(!resp.ok){
-      var errText = await resp.text();
-      console.error('Booking error:', resp.status, errText);
+    var respBody = await resp.json();
+    console.log('Resposta:', resp.status, respBody);
+
+    if(resp.ok && respBody.success){
+      bookingOk = true;
+    } else {
+      errorMsg = respBody.error || 'Erro desconhecido';
+      console.error('Booking error:', errorMsg);
     }
   } catch(e) {
     console.error('Fetch error:', e);
+    errorMsg = e.message;
   }
 
-  // ── WhatsApp notification ──────────────────────────────────────────
   var waMsg = '📅 *NOVO AGENDAMENTO* — SL Saúde %26 Bem-Estar'
     + '%0A%0A👤 *Cliente:* ' + encodeURIComponent(nome)
     + '%0A📱 *Telefone:* ' + encodeURIComponent(tel)
@@ -1177,24 +1185,21 @@ async function enviarAgendamento(){
     + (obs ? '%0A📝 *Obs:* ' + encodeURIComponent(obs) : '')
     + '%0A%0A' + (bookingOk
         ? '✅ Registrado automaticamente no sistema.'
-        : '⚠️ Erro no sistema — registrar manualmente.');
+        : '⚠️ Registrar manualmente. Erro: ' + encodeURIComponent(errorMsg));
 
   setTimeout(function(){
     window.open('https://wa.me/5591982079121?text=' + waMsg, '_blank');
   }, 600);
 
-  // ── Feedback para o cliente ────────────────────────────────────────
   if(bookingOk){
     document.getElementById('form-fields').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   } else {
-    showFormError('Não foi possível registrar no sistema agora, mas seu pedido foi enviado pelo WhatsApp! Entraremos em contato em breve.');
+    showFormError('Não foi possível registrar no sistema agora. Seu pedido foi enviado pelo WhatsApp — entraremos em contato em breve!');
     btn.textContent = '📅 Confirmar Agendamento';
     btn.disabled = false;
   }
 }
-
-function calcFim
 
 function calcFimHorario(inicio){
   var parts = inicio.split(':');
