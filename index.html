@@ -1133,6 +1133,30 @@ async function enviarAgendamento(){
   var dataFmt = new Date(data + 'T00:00:00').toLocaleDateString('pt-BR');
   var horarioFim = calcFimHorario(horario);
 
+  // ── Abre WhatsApp AGORA (dentro do evento de clique, antes do async) ──
+  // Isso evita o bloqueio de pop-up do navegador
+  var waMsgBase = '📅 *NOVO AGENDAMENTO* — SL Saúde & Bem-Estar'
+    + '\n\n👤 *Cliente:* ' + nome
+    + '\n📱 *Telefone:* ' + tel
+    + (email ? '\n📧 *E-mail:* ' + email : '')
+    + '\n\n🌿 *Serviço:* ' + servico
+    + '\n📆 *Data:* ' + dataFmt
+    + '\n🕐 *Horário:* ' + horario + ' — ' + horarioFim
+    + (obs ? '\n📝 *Obs:* ' + obs : '')
+    + '\n\n⏳ Registrando no sistema...';
+
+  var waUrl = 'https://wa.me/5591982079121?text=' + encodeURIComponent(waMsgBase);
+  
+  // Cria link invisível e clica — funciona sem bloqueio pois está no evento de clique
+  var waLink = document.createElement('a');
+  waLink.href = waUrl;
+  waLink.target = '_blank';
+  waLink.rel = 'noopener';
+  document.body.appendChild(waLink);
+  waLink.click();
+  document.body.removeChild(waLink);
+
+  // ── Envia para o sistema em paralelo ──────────────────────────────
   var payload = {
     nome: nome,
     email: email || '',
@@ -1145,12 +1169,7 @@ async function enviarAgendamento(){
     status: 'Agendado'
   };
 
-  console.log('Enviando para:', 'https://gcurojrfdqbktokyfgfl.supabase.co/functions/v1/public-booking');
-  console.log('Payload:', JSON.stringify(payload));
-
   var bookingOk = false;
-  var errorMsg = '';
-
   try {
     var resp = await fetch('https://gcurojrfdqbktokyfgfl.supabase.co/functions/v1/public-booking', {
       method: 'POST',
@@ -1160,42 +1179,19 @@ async function enviarAgendamento(){
       },
       body: JSON.stringify(payload)
     });
-
     var respBody = await resp.json();
-    console.log('Resposta:', resp.status, respBody);
-
-    if(resp.ok && respBody.success){
-      bookingOk = true;
-    } else {
-      errorMsg = respBody.error || 'Erro desconhecido';
-      console.error('Booking error:', errorMsg);
-    }
+    bookingOk = resp.ok && respBody.success;
+    if(!bookingOk) console.error('Booking error:', respBody.error);
   } catch(e) {
     console.error('Fetch error:', e);
-    errorMsg = e.message;
   }
 
-  var waMsg = '📅 *NOVO AGENDAMENTO* — SL Saúde %26 Bem-Estar'
-    + '%0A%0A👤 *Cliente:* ' + encodeURIComponent(nome)
-    + '%0A📱 *Telefone:* ' + encodeURIComponent(tel)
-    + (email ? '%0A📧 *E-mail:* ' + encodeURIComponent(email) : '')
-    + '%0A%0A🌿 *Serviço:* ' + encodeURIComponent(servico)
-    + '%0A📆 *Data:* ' + encodeURIComponent(dataFmt)
-    + '%0A🕐 *Horário:* ' + encodeURIComponent(horario + ' — ' + horarioFim)
-    + (obs ? '%0A📝 *Obs:* ' + encodeURIComponent(obs) : '')
-    + '%0A%0A' + (bookingOk
-        ? '✅ Registrado automaticamente no sistema.'
-        : '⚠️ Registrar manualmente. Erro: ' + encodeURIComponent(errorMsg));
-
-  setTimeout(function(){
-    window.open('https://wa.me/5591982079121?text=' + waMsg, '_blank');
-  }, 600);
-
+  // ── Mostra resultado para o cliente ──────────────────────────────
   if(bookingOk){
     document.getElementById('form-fields').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   } else {
-    showFormError('Não foi possível registrar no sistema agora. Seu pedido foi enviado pelo WhatsApp — entraremos em contato em breve!');
+    showFormError('Agendamento enviado pelo WhatsApp! Caso não receba confirmação em breve, entre em contato.');
     btn.textContent = '📅 Confirmar Agendamento';
     btn.disabled = false;
   }
